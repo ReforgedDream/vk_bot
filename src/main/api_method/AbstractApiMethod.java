@@ -25,15 +25,21 @@ public abstract class AbstractApiMethod {
             return "";
         }
 
-        String output = "";
+        StringBuilder sb1 = new StringBuilder();
 
         for (String key : params.keySet()) {
 
-            output += key + "=" + params.get(key) + "&";
-
+            sb1.append(key);
+            sb1.append("=");
+            sb1.append(params.get(key));
+            sb1.append("&");
         }
 
-        return output + TOKEN_STRING + "=" + TOKEN_API;
+        sb1.append(TOKEN_STRING);
+        sb1.append("=");
+        sb1.append(TOKEN_API);
+
+        return sb1.toString();
 
     }
 

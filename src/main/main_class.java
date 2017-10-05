@@ -9,10 +9,7 @@ public class main_class {
 
     public static void main(String[] args){
 
-        new MessageSend("6", "test1").Send();
-        new MessageSend("6", "test2").Send();
-        new MessageSend("6", "test3").Send();
-
+        new MessageSend("6", "StringBuilder_test_v3").Send();
 
     }
 
