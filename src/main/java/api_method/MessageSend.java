@@ -21,6 +21,16 @@ public class MessageSend extends AbstractApiMethod {
         this.message = message;
     }
 
+    /**
+     * это конструктор
+     *
+     * @param chatId  айди чата
+     * @param message сообщение для отправки
+     */
+    public MessageSend(String chatId, String message) {
+        this.chatId = chatId;
+        this.message = message;
+    }
 
     public void Send() {
 
