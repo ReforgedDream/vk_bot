@@ -1,7 +1,6 @@
-package main;
+package main.java;
 
-import main.api_method.MessageSend;
-
+import main.java.api_method.MessageSend;
 
 public class main_class {
 
@@ -10,7 +9,7 @@ public class main_class {
         MessageSend messageSend = new MessageSend();
 
         messageSend.setChatId("6");
-        messageSend.setMessage("setter_test");
+        messageSend.setMessage("gradle_test");
         messageSend.Send();
 
     }
