@@ -1,7 +1,7 @@
-package main.api_method;
+package api_method;
 
-import main.utils.FileReader;
-import main.utils.GETRequestProvider;
+import utils.FileReader;
+import utils.GETRequestProvider;
 
 import java.util.HashMap;
 
@@ -11,7 +11,7 @@ public abstract class AbstractApiMethod {
 
     private final String TOKEN_STRING = "access_token";
 
-    private final String TOKEN_API = new FileReader("src/main/token").ReadFile();
+    private final String TOKEN_API = new FileReader("src/main/java/token").ReadFile();
 
     private HashMap<String, String> params = new HashMap<String, String>();
 
@@ -25,15 +25,21 @@ public abstract class AbstractApiMethod {
             return "";
         }
 
-        String output = "";
+        StringBuilder sb1 = new StringBuilder();
 
         for (String key : params.keySet()) {
 
-            output += key + "=" + params.get(key) + "&";
-
+            sb1.append(key);
+            sb1.append("=");
+            sb1.append(params.get(key));
+            sb1.append("&");
         }
 
-        return output + TOKEN_STRING + "=" + TOKEN_API;
+        sb1.append(TOKEN_STRING);
+        sb1.append("=");
+        sb1.append(TOKEN_API);
+
+        return sb1.toString();
 
     }
 

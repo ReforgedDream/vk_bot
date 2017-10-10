@@ -1,4 +1,4 @@
-package main.api_method;
+package api_method;
 
 public class MessageSend extends AbstractApiMethod {
 
@@ -10,6 +10,16 @@ public class MessageSend extends AbstractApiMethod {
 
     private String chatId;
     private String message;
+
+    public void setChatId(String chatId) {
+
+        this.chatId = chatId;
+    }
+
+    public void setMessage(String message) {
+
+        this.message = message;
+    }
 
     /**
      * это конструктор
@@ -27,10 +37,15 @@ public class MessageSend extends AbstractApiMethod {
         setParam(CHAT_ID, this.chatId);
         setParam(MESSAGE, this.message);
 
-        super.Send(API_URL + METHOD_NAME + "?" + getParamsToString());
+        StringBuilder sb2 = new StringBuilder();
 
+        sb2.append(API_URL);
+        sb2.append(METHOD_NAME);
+        sb2.append("?");
+        sb2.append(getParamsToString());
+
+        super.Send(sb2.toString());
 
     }
-
 
 }
