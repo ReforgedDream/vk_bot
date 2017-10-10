@@ -1,4 +1,4 @@
-package main.api_method;
+package main.java.api_method;
 
 public class MessageSend extends AbstractApiMethod {
 
