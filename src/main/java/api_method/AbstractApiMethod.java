@@ -1,7 +1,7 @@
-package main.java.api_method;
+package api_method;
 
-import main.java.utils.FileReader;
-import main.java.utils.GETRequestProvider;
+import utils.FileReader;
+import utils.GETRequestProvider;
 
 import java.util.HashMap;
 

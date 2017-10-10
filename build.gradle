@@ -16,7 +16,7 @@ jar {
   manifest {
     attributes(
       'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-      'Main-Class': 'main.java.main_class'
+      'Main-Class': 'main_class'
     )
   }
 }
