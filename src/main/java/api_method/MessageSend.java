@@ -1,4 +1,6 @@
-package main.java.api_method;
+package api_method;
+
+import com.google.gson.JsonElement;
 
 public class MessageSend extends AbstractApiMethod {
 
@@ -44,7 +46,7 @@ public class MessageSend extends AbstractApiMethod {
         sb2.append("?");
         sb2.append(getParamsToString());
 
-        super.Send(sb2.toString());
+        JsonElement jsonElementObject = super.Send(sb2.toString());
 
     }
 

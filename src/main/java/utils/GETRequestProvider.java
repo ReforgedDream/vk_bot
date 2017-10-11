@@ -1,4 +1,7 @@
-package main.java.utils;
+package utils;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,7 +19,7 @@ public class GETRequestProvider {
     }
 
     // HTTP GET request
-    public void sendGet() throws Exception {
+    public JsonElement sendGet() throws Exception {
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -28,8 +31,7 @@ public class GETRequestProvider {
         con.setRequestProperty("User-Agent", USER_AGENT);
 
         int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);
+        System.out.println("\n[Util GETRequestProvider]Sending 'GET' request to URL : " + url);
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -41,8 +43,11 @@ public class GETRequestProvider {
         }
         in.close();
 
-        //print result
-        System.out.println(response.toString());
+        JsonParser jsonParser = new JsonParser();
+
+        JsonElement jsonElement = jsonParser.parse(response.toString());
+
+        return jsonElement;
 
     }
 
