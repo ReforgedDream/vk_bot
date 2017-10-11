@@ -1,5 +1,6 @@
 package api_method;
 
+import com.google.gson.JsonElement;
 import utils.FileReader;
 import utils.GETRequestProvider;
 
@@ -43,14 +44,17 @@ public abstract class AbstractApiMethod {
 
     }
 
-    public void Send(String url) {
+    public JsonElement Send(String url) {
+
+        JsonElement returnGson = null;
 
         try {
-            new GETRequestProvider(url).sendGet();
+            returnGson = new GETRequestProvider(url).sendGet();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        return returnGson;
     }
 
 }
