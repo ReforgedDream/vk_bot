@@ -12,7 +12,7 @@ class Cities {
     private String lastStep = null;
     private CitiesDB citiesDB = new CitiesDB();
 
-    public static void main(String[] args) {
+    public void StartGameCities() {
         System.out.println(title);
         Cities cities = new Cities();
 

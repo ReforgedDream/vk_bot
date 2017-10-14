@@ -3,7 +3,7 @@ package cities;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class CitiesDB {
+class CitiesDB {
     private HashSet<String> usedCities = new HashSet<>(); //Уже использованные города
     private ArrayList<String> citiesList = new ArrayList<>(); //Список всех городов
     private Character lastChar;
@@ -13,7 +13,7 @@ public class CitiesDB {
         addCities(); //Инициализируем города
     }
 
-    public String getBotLastStep() {
+    String getBotLastStep() {
         return botLastStep;
     }
 
@@ -26,7 +26,7 @@ public class CitiesDB {
         citiesList.add("керчь");
     }
 
-    public Boolean isContain(String newStep, String lastStep) {
+    Boolean isContain(String newStep, String lastStep) {
         if (lastChar != null) {
             lastChar = lastStep.charAt(lastStep.length() - 1); //Последняя буква из предыдущего хода
 
@@ -48,22 +48,18 @@ public class CitiesDB {
         }
     }
 
-    public Boolean botAnswer(String lastStep) {
+    Boolean botAnswer(String lastStep) {
         lastChar = lastStep.charAt(lastStep.length() - 1); //Последняя буква из предыдущего хода
 
         for (String entry : citiesList) {
             if (entry.charAt(0) == lastChar) {
-                if (usedCities.contains(entry)) {
-                    continue;
-                } else {
+                if (!usedCities.contains(entry)) {
                     System.out.println("Бот говорит: ");
                     System.out.println(entry);
                     usedCities.add(entry);
                     botLastStep = entry;
                     return true;
                 }
-            } else {
-                continue;
             }
         }
         return false;
