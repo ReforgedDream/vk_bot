@@ -27,4 +27,5 @@ class CitiesChecks {
         return !citiesDB.getСitiesList().contains(newStep);
     }
 
+
 }

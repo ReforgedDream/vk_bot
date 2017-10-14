@@ -29,8 +29,9 @@ class Cities {
             } catch (IOException e) {
                 System.out.println(e.toString());
             }
-
-            if (citiesChecks.CheckLastChar(userInput)) { //Проверка начальной буквы города
+            if (userInput.trim().length() == 0) {
+                continue;
+            } else if (citiesChecks.CheckLastChar(userInput)) { //Проверка начальной буквы города
                 System.out.println("Ошибка ввода, имя города должно начинаться на букву " + citiesChecks.getLastChar() + "!");
                 continue;
             } else if (citiesChecks.CheckUsedCity(userInput)) { //Проверка использования города
@@ -42,7 +43,7 @@ class Cities {
             }
             citiesDB.setUsedCities(userInput); //Добавить последний ход в базу использованных городов
             citiesChecks.setLastStep(userInput); //Запомнить последний ход
-            System.out.println("Успешно! Ход бота:");
+            System.out.println("Успешно! Ход противника:");
             break; //Выход из цикла, для продолжения игры
         }
     }
