@@ -5,23 +5,21 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 class Cities {
-    private Boolean isGameContinue = true;
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private String userInput;
-    private CitiesDB citiesDB = new CitiesDB();
     private CitiesChecks citiesChecks = new CitiesChecks();
 
-    public void StartGameCities() { //Запуск игры "Города"
-        String title = "Начнем игру!";
+    public void startGameCities() { //Запуск игры "Города"
+        final String title = "Начнем игру!";
         System.out.println(title);
-        Cities cities = new Cities();
 
-        for (; isGameContinue; ) {
-            cities.UserStep();
-            cities.BotStep();
+        for (Boolean isGameContinue = true; isGameContinue; ) {
+            userStep();
+            isGameContinue = botStep();
         }
     }
-    private void UserStep() { //Ход пользователя
+
+    private void userStep() { //Ход пользователя
         for (; true; ) {
             System.out.println("Введите название города :");
             try {
@@ -31,36 +29,37 @@ class Cities {
             }
             if (userInput.trim().length() == 0) {
                 continue;
-            } else if (citiesChecks.CheckLastChar(userInput)) { //Проверка начальной буквы города
+            } else if (citiesChecks.checkLastChar(userInput)) { //Проверка начальной буквы города
                 System.out.println("Ошибка ввода, имя города должно начинаться на букву " + citiesChecks.getLastChar() + "!");
                 continue;
-            } else if (citiesChecks.CheckUsedCity(userInput)) { //Проверка использования города
+            } else if (citiesChecks.checkUsedCity(userInput)) { //Проверка использования города
                 System.out.println("Город " + userInput + " уже использовался в игре!");
                 continue;
-            } else if (citiesChecks.CheckCity(userInput)) { //Проверка существования города
+            } else if (citiesChecks.checkCity(userInput)) { //Проверка существования города
                 System.out.println("Город " + userInput + " не существует!");
                 continue;
             }
-            citiesDB.setUsedCities(userInput); //Добавить последний ход в базу использованных городов
+            citiesChecks.getCitiesDB().setUsedCities(userInput); //Добавить последний ход в базу использованных городов
             citiesChecks.setLastStep(userInput); //Запомнить последний ход
             System.out.println("Успешно! Ход противника:");
             break; //Выход из цикла, для продолжения игры
         }
     }
 
-    private void BotStep() { //Ход бота
+    private Boolean botStep() { //Ход бота
         int i = 0; //Счетчик для определения последнего цикла
-        for (String entry : citiesDB.getСitiesList()) {
-            if (entry.charAt(0) == citiesChecks.getLastChar() && !citiesChecks.CheckUsedCity(entry)) {
+        for (String entry : citiesChecks.getCitiesDB().getСitiesList()) {
+            if (entry.charAt(0) == citiesChecks.getLastChar() && !citiesChecks.checkUsedCity(entry)) {
                 System.out.println(entry);
-                citiesDB.getUsedCities().add(entry); //Добавить последний ход в базу использованных городов
+                citiesChecks.getCitiesDB().getUsedCities().add(entry); //Добавить последний ход в базу использованных городов
                 citiesChecks.setLastStep(entry); //Запомнить последний ход
                 break; //Выход из цикла, для продолжения игры
-            } else if (i++ == citiesDB.getСitiesList().size() - 1) {
+            } else if (i++ == citiesChecks.getCitiesDB().getСitiesList().size() - 1) {
                 System.out.println("Бот не может назвать город! Вы победили!");
-                isGameContinue = false;
+                return false;
             }
         }
+        return true;
     }
 }
 
