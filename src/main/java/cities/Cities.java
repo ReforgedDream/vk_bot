@@ -14,11 +14,8 @@ class Cities {
         final String title = "Начнем игру!";
         System.out.println(title);
 
-        for (Boolean isGameContinue = true; isGameContinue; ) {
-            isGameContinue = userStep();
-            if (isGameContinue) {
-                isGameContinue = botStep();
-            }
+        //noinspection StatementWithEmptyBody
+        for (; userStep() && botStep(); ) {
         }
     }
 
