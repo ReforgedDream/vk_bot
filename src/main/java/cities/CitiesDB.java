@@ -11,8 +11,8 @@ class CitiesDB {
     private HashSet<String> usedCities = new HashSet<>(); //Уже использованные города
     private ArrayList<String> citiesList = new ArrayList<>(); //Список всех городов
 
-    CitiesDB() {
-        addCities(); //Инициализируем города
+    CitiesDB(String fileName) {
+        addCities(fileName); //Инициализируем города
     }
 
     HashSet<String> getUsedCities() {
@@ -27,10 +27,10 @@ class CitiesDB {
         return citiesList;
     }
 
-    private void addCities() {
+    private void addCities(String fileName) {
         String filePath = new File("").getAbsolutePath(); //Получить путь к текущему каталогу
         try {
-            BufferedReader readFromFile = new BufferedReader(new FileReader(filePath.concat("/src/main/java/cities/CitiesOfTheWorld.txt")));
+            BufferedReader readFromFile = new BufferedReader(new FileReader(filePath.concat("/src/main/java/cities/" + fileName)));
             for (String lineCity = readFromFile.readLine(); lineCity != null; lineCity = readFromFile.readLine()) {
                 citiesList.add(lineCity.toLowerCase());
             }

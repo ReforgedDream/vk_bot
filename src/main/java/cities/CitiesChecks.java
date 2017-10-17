@@ -1,15 +1,15 @@
 package cities;
 
 class CitiesChecks {
-    private CitiesDB citiesDB = new CitiesDB();
+    private CitiesDB citiesDB;
     private String lastStep;
+
+    CitiesChecks(CitiesDB citiesDB) {
+        this.citiesDB = citiesDB;
+    }
 
     void setLastStep(String lastStep) {
         this.lastStep = lastStep;
-    }
-
-    CitiesDB getCitiesDB() {
-        return citiesDB;
     }
 
     Character getLastChar() {
