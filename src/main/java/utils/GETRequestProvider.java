@@ -13,8 +13,14 @@ public class GETRequestProvider {
     private final String USER_AGENT = "Mozilla/5.0";
 
     private String url;
+    private int timeout = 0;
 
-    public GETRequestProvider(String url) {
+    /**
+     * @param url, timeout
+     */
+    public GETRequestProvider(String url, int timeout) {
+
+        this.timeout = timeout;
         this.url = url;
     }
 
@@ -23,6 +29,8 @@ public class GETRequestProvider {
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setReadTimeout(this.timeout);
 
         // optional default is GET
         con.setRequestMethod("GET");
@@ -35,9 +43,11 @@ public class GETRequestProvider {
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
+
         String inputLine;
         StringBuffer response = new StringBuffer();
 
+        //get the response from server
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
@@ -45,6 +55,7 @@ public class GETRequestProvider {
 
         JsonParser jsonParser = new JsonParser();
 
+        //parse the response as JSON
         JsonElement jsonElement = jsonParser.parse(response.toString());
 
         return jsonElement;
