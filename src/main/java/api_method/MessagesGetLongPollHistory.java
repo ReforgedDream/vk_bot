@@ -10,7 +10,6 @@ public class MessagesGetLongPollHistory extends AbstractApiMethod {
 
     private final String lp_version = "2";
 
-
     public void getLongPollHistory() {
 
         MessageGetLongPollServer getLongPollServer = new MessageGetLongPollServer();

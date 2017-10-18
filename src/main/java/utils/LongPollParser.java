@@ -11,9 +11,6 @@ public class LongPollParser {
     public LongPollParser() {
     }
 
-    ;
-
-
     /**
      * Parses the "updates" section from Long Poll server
      * which has to be a JSON Array

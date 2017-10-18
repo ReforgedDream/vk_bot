@@ -16,9 +16,6 @@ public class LongPoll {
     public LongPoll() {
     }
 
-    ;
-
-
     /**
      * Makes a request to Long Poll server
      * Args: null
@@ -84,6 +81,5 @@ public class LongPoll {
         return jsonUpdates;
 
     }
-
 
 }
