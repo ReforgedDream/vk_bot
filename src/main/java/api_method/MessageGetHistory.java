@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 
 public class MessageGetHistory extends AbstractApiMethod {
 
-    static int date = 0;
     static int messageId = 0;
     private final String METHOD_NAME = "messages.getHistory";
     private final String CHAT_ID = "chat_id";
@@ -28,23 +27,16 @@ public class MessageGetHistory extends AbstractApiMethod {
         setParam(OFFSET, this.offset);
         setParam(COUNT, this.count);
 
-        StringBuilder sb2 = new StringBuilder();
+        JsonElement jsonHttpResponse = formUrlAndSend(METHOD_NAME);
 
-        sb2.append(API_URL);
-        sb2.append(METHOD_NAME);
-        sb2.append("?");
-        sb2.append(getParamsToString());
-
-        JsonElement jsonElementObject = super.Send(sb2.toString());
-
-        JsonElement jsonResponse = jsonElementObject.getAsJsonObject().get("response");
+        JsonElement jsonResponse = jsonHttpResponse.getAsJsonObject().get("response");
         JsonArray jsonArray = jsonResponse.getAsJsonArray();
         JsonElement jsonFirstElement = jsonArray.get(1);
 
         String body = jsonFirstElement.getAsJsonObject().get("body").toString();
         body = body.substring(1, (body.length() - 1));
         int messageId = jsonFirstElement.getAsJsonObject().get("mid").getAsInt();
-        int date = jsonFirstElement.getAsJsonObject().get("date").getAsInt();
+
 
         if (this.messageId != messageId) {
 
