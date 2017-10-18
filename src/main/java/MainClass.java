@@ -7,7 +7,6 @@ public class MainClass {
 
     public static void main(String[] args) {
 
-
         LongPollParser lpParser = new LongPollParser();
         LongPoll lp = new LongPoll();
         MessageSend messageSend = new MessageSend("6", "default_test", false);
@@ -17,7 +16,6 @@ public class MainClass {
         while (true) {
 
             messageData = lpParser.parseLongPollAnswer(lp.sendRequestToLongPoll());
-
 
             if (Objects.equals(messageData[0], "-1")) {
 
@@ -44,6 +42,5 @@ public class MainClass {
             }
         }
     }
-
 }
 

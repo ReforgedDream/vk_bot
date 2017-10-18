@@ -58,7 +58,6 @@ public abstract class AbstractApiMethod {
 
     }
 
-
     public JsonElement formUrlAndSend(String methodName) {
         StringBuilder sb2 = new StringBuilder();
 
@@ -71,8 +70,6 @@ public abstract class AbstractApiMethod {
 
         return jsonElementObject;
     }
-
-
 
     public JsonElement Send(String url) {
 

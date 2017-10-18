@@ -14,7 +14,6 @@ public class MessageGetLongPollServer extends AbstractApiMethod {
     public MessageGetLongPollServer() {
     }
 
-
     /**
      * Parameters: no
      * Returns an array of 3 strings as follows:
@@ -54,6 +53,5 @@ public class MessageGetLongPollServer extends AbstractApiMethod {
         return str;
 
     }
-
 
 }
