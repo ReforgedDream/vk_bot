@@ -1,7 +1,8 @@
-package main.java.api_method;
+package api_method;
 
-import main.java.utils.FileReader;
-import main.java.utils.GETRequestProvider;
+import com.google.gson.JsonElement;
+import utils.FileReader;
+import utils.GETRequestProvider;
 
 import java.util.HashMap;
 
@@ -13,10 +14,18 @@ public abstract class AbstractApiMethod {
 
     private final String TOKEN_API = new FileReader("src/main/java/token").ReadFile();
 
+    private final String VERSION = "v";
+
+    private final String version = "5.68";
+
     private HashMap<String, String> params = new HashMap<String, String>();
 
     public void setParam(String key, String value) {
         this.params.put(key, value);
+    }
+
+    public void vipeParam() {
+        this.params.clear();
     }
 
     public String getParamsToString() {
@@ -25,32 +34,59 @@ public abstract class AbstractApiMethod {
             return "";
         }
 
-        StringBuilder sb1 = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
         for (String key : params.keySet()) {
 
-            sb1.append(key);
-            sb1.append("=");
-            sb1.append(params.get(key));
-            sb1.append("&");
+            stringBuilder.append(key);
+            stringBuilder.append("=");
+            stringBuilder.append(params.get(key));
+            stringBuilder.append("&");
         }
 
-        sb1.append(TOKEN_STRING);
-        sb1.append("=");
-        sb1.append(TOKEN_API);
+        stringBuilder.append(TOKEN_STRING);
+        stringBuilder.append("=");
+        stringBuilder.append(TOKEN_API);
 
-        return sb1.toString();
+        stringBuilder.append("&");
+
+        stringBuilder.append(VERSION);
+        stringBuilder.append("=");
+        stringBuilder.append(version);
+
+        return stringBuilder.toString();
 
     }
 
-    public void Send(String url) {
+    public JsonElement formUrlAndSend(String methodName) {
+        StringBuilder sb2 = new StringBuilder();
+
+        sb2.append(API_URL);
+        sb2.append(methodName);
+        sb2.append("?");
+        sb2.append(getParamsToString());
+
+        JsonElement jsonElementObject = Send(sb2.toString());
+
+        return jsonElementObject;
+    }
+
+    public JsonElement Send(String url) {
+
+        JsonElement returnJson = new JsonElement() {
+            @Override
+            public JsonElement deepCopy() {
+                return null;
+            }
+        };
 
         try {
-            new GETRequestProvider(url).sendGet();
+            returnJson = new GETRequestProvider(url, 0).sendGet();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        return returnJson;
     }
 
 }
