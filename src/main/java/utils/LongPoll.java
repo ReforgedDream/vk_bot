@@ -1,6 +1,7 @@
+package utils;
+
 import api_method.MessageGetLongPollServer;
 import com.google.gson.JsonElement;
-import utils.GETRequestProvider;
 
 public class LongPoll {
 

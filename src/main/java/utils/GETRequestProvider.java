@@ -38,6 +38,12 @@ public class GETRequestProvider {
         //add request header
         con.setRequestProperty("User-Agent", USER_AGENT);
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+
         int responseCode = con.getResponseCode();
         System.out.println("\n[Util GETRequestProvider]Sending 'GET' request to URL : " + url);
 

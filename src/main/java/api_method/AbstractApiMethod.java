@@ -81,7 +81,7 @@ public abstract class AbstractApiMethod {
         };
 
         try {
-            returnJson = new GETRequestProvider(url, 0).sendGet();
+            returnJson = new GETRequestProvider(url.replace(" ", "%20"), 0).sendGet();
         } catch (Exception e) {
             e.printStackTrace();
         }

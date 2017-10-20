@@ -51,7 +51,7 @@ public class MessageSend extends AbstractApiMethod {
         }
 
         setParam(idParameter, this.id);
-        setParam(MESSAGE, this.message);
+        setParam(MESSAGE, "[Бот]" + this.message);
 
         StringBuilder sb2 = new StringBuilder();
 
