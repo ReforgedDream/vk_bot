@@ -4,8 +4,6 @@ import api_method.MessageSend;
 import utils.LongPoll;
 import utils.LongPollParser;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Objects;
 
 public class Cities {
@@ -14,6 +12,9 @@ public class Cities {
     private CitiesChecks citiesChecks = new CitiesChecks(citiesDB);
     LongPoll lp = new LongPoll();
     MessageSend messageSend = new MessageSend(null, null, false);
+
+    private final String invitation = "Введите название города:";
+    private final String pleaseEnterLetter = "Введите название города на букву ";
 
     private String userId = null;
     private String isChat = null;
@@ -35,7 +36,7 @@ public class Cities {
 
         messageSend.setId(this.userId);
         messageSend.setIsChat(Boolean.parseBoolean(this.isChat));
-        messageSend.setMessage(title);
+        messageSend.setMessage(title + "<br>" + invitation);
         messageSend.Send();
 
         //noinspection StatementWithEmptyBody
@@ -44,18 +45,14 @@ public class Cities {
     }
 
     private Boolean userStep() { //Ход пользователя
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String userInput = null;
-        for (int i = 0; i <= 100; i++) {
-            //if (citiesChecks.getLastChar() != null) {
-            //messageSend.setMessage("Введите название города на букву " + citiesChecks.getLastChar() + " :");
-            //messageSend.Send();
-            //} else {
-            if (citiesChecks.getLastChar() == null) {
-                messageSend.setMessage("Введите название города :");
-                messageSend.Send();
-            }
 
+        String userInput = null;
+
+        for (int i = 0; i < 10; i++) {
+
+
+            //Make a request to Long Poll server
+            //and get a message data
             do {
                 messageData = lpParser.parseLongPollAnswer(lp.sendRequestToLongPoll());
             } while (Objects.equals(messageData[0], "-1") ||
@@ -63,11 +60,7 @@ public class Cities {
 
             userInput = messageData[3];
 
-            if (i == 100) {
-                messageSend.setMessage("Вы исчерпали количество попыток! Игра окончена.");
-                messageSend.Send();
-                return false;
-            } else if (userInput != null) {
+            if (userInput != null) {
                 if (userInput.trim().length() == 0) { //Проверка корректного ввоода пользователя
                     continue;
                 } else if (citiesChecks.checkLastChar(userInput)) { //Проверка начальной буквы города
@@ -75,11 +68,18 @@ public class Cities {
                     messageSend.Send();
                     continue;
                 } else if (citiesChecks.checkUsedCity(userInput)) { //Проверка использования города
-                    messageSend.setMessage("Город " + userInput + " уже использовался в игре!");
+                    messageSend.setMessage("Город " + userInput + " уже использовался в игре!" + "<br>" +
+                            pleaseEnterLetter + citiesChecks.getLastChar() + ":");
                     messageSend.Send();
                     continue;
                 } else if (citiesChecks.checkCity(userInput)) { //Проверка существования города
-                    messageSend.setMessage("Город " + userInput + " не существует!");
+                    String noSuchCity = "Город " + userInput + " не существует!";
+                    if (citiesChecks.getLastChar() == null) {
+                        messageSend.setMessage(noSuchCity + "<br>" + invitation);
+                    } else {
+                        messageSend.setMessage(noSuchCity + "<br>" + pleaseEnterLetter + citiesChecks.getLastChar() + ":");
+                    }
+
                     messageSend.Send();
                     continue;
                 }
@@ -90,6 +90,8 @@ public class Cities {
             //messageSend.Send();
             return true; //Выход из цикла, для продолжения игры
         }
+        messageSend.setMessage("Вы исчерпали количество попыток! Игра окончена.");
+        messageSend.Send();
         return false;
     }
 
@@ -98,7 +100,7 @@ public class Cities {
         for (String entry : citiesDB.getСitiesList()) {
             if (entry.charAt(0) == citiesChecks.getLastChar() && !citiesChecks.checkUsedCity(entry)) {
                 messageSend.setMessage("Успешно! Ход противника: " + entry + ". " +
-                        "Введите название города на букву " + entry.charAt(entry.length() - 1) + ":");
+                        pleaseEnterLetter + entry.charAt(entry.length() - 1) + ":");
                 messageSend.Send();
                 citiesDB.getUsedCities().add(entry); //Добавить последний ход в базу использованных городов
                 citiesChecks.setLastStep(entry); //Запомнить последний ход
