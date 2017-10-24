@@ -56,13 +56,10 @@ public class Cities {
                 messageSend.Send();
             }
 
-            messageData[0] = "-1";
-            messageData[1] = "-1";
-
-            while (Objects.equals(messageData[0], "-1") ||
-                    Objects.equals(messageData[1], "-1")) {
+            do {
                 messageData = lpParser.parseLongPollAnswer(lp.sendRequestToLongPoll());
-            }
+            } while (Objects.equals(messageData[0], "-1") ||
+                    Objects.equals(messageData[1], "-1"));
 
             userInput = messageData[3];
 
