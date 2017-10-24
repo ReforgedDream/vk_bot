@@ -46,7 +46,7 @@ public class Cities {
     private Boolean userStep() { //Ход пользователя
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String userInput = null;
-        for (int i = 0; i <= 10; i++) {
+        for (int i = 0; i <= 100; i++) {
             //if (citiesChecks.getLastChar() != null) {
             //messageSend.setMessage("Введите название города на букву " + citiesChecks.getLastChar() + " :");
             //messageSend.Send();
@@ -66,7 +66,7 @@ public class Cities {
 
             userInput = messageData[3];
 
-            if (i == 10) {
+            if (i == 100) {
                 messageSend.setMessage("Вы исчерпали количество попыток! Игра окончена.");
                 messageSend.Send();
                 return false;
