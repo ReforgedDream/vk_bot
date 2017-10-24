@@ -21,12 +21,13 @@ public class LongPollParser {
 
         int sizeOfJsonArray = 0;
         int id = 0;
-        String[] answer = new String[4];
+        String[] answer = new String[5];
 
         answer[0] = null;
         answer[1] = null;
         answer[2] = null;
         answer[3] = null;
+        answer[4] = null;
 
         boolean isChat = false;
 
@@ -36,11 +37,7 @@ public class LongPollParser {
             sizeOfJsonArray = inputJson.getAsJsonArray().size();
 
             JsonArray jsonField;
-/*
-//debug
-            System.out.println("The whole \"updates\" array:");
-            System.out.println(inputJson.getAsJsonArray().toString());
-*/
+
             //iterate through all of the elements of the "updates" section
             //...which is array and contains arrays
             for (int i = 0; i < sizeOfJsonArray; i++) {
@@ -59,28 +56,33 @@ public class LongPollParser {
                         //examine if the array's length is more or equals 5
                         if (jsonField.size() >= 5) {
 
-                            //check if there's message, ID and flags
+                            //check if there's message, ID, flags and message id
                             if (jsonField.get(5).isJsonPrimitive() &&
                                     jsonField.get(3).isJsonPrimitive() &&
-                                    jsonField.get(2).isJsonPrimitive()) {
+                                    jsonField.get(2).isJsonPrimitive() &&
+                                    jsonField.get(1).isJsonPrimitive()) {
 
-                                //get the flags and mask it by 16
-                                //16 is the mask for CHAT flag
-                                if ((jsonField.get(2).getAsInt() & 16) == 16) {
-                                    isChat = true;
-                                    //for messages from chats, this number is added to ID value
-                                    id = jsonField.get(3).getAsInt() - 2000000000;
-                                } else {
-                                    isChat = false;
-                                    id = jsonField.get(3).getAsInt();
+                                if (!jsonField.get(5).getAsString().contains("[Бот]")) {
+
+                                    //get the flags and mask it by 16
+                                    //16 is the mask for CHAT flag
+                                    if ((jsonField.get(2).getAsInt() & 16) == 16) {
+                                        isChat = true;
+                                        //for messages from chats, this number is added to ID value
+                                        id = jsonField.get(3).getAsInt() - 2000000000;
+                                    } else {
+                                        isChat = false;
+                                        id = jsonField.get(3).getAsInt();
+                                    }
+
+                                    //return as strings: ID, isChat flag, flags from API, message and message ID
+                                    answer[0] = Integer.toString(id);
+                                    answer[1] = Boolean.toString(isChat);
+                                    answer[2] = jsonField.get(2).getAsString();
+                                    answer[3] = jsonField.get(5).getAsString().toLowerCase();
+                                    answer[4] = jsonField.get(1).getAsString();
+                                    return answer;
                                 }
-
-                                //return as strings: ID, isChat flag, flags from API and the message
-                                answer[0] = Integer.toString(id);
-                                answer[1] = Boolean.toString(isChat);
-                                answer[2] = jsonField.get(2).getAsString();
-                                answer[3] = jsonField.get(5).getAsString();
-                                return answer;
 
                             }
                         }
