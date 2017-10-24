@@ -30,11 +30,6 @@ public class MainClass {
                 }
             }
         }
-
-        //System.out.println("ID: " + messageData[0]);
-        //System.out.println("isChat: " + messageData[1]);
-        //System.out.println("Flags: " + messageData[2]);
-        //System.out.println("Message: " + messageData[3]);
     }
 }
 

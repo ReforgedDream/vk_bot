@@ -10,10 +10,11 @@ import java.util.Objects;
 
 public class Cities {
     LongPollParser lpParser = new LongPollParser();
+    private CitiesDB citiesDB = new CitiesDB("CitiesOfRussiaExtended.txt");
     private CitiesChecks citiesChecks = new CitiesChecks(citiesDB);
     LongPoll lp = new LongPoll();
     MessageSend messageSend = new MessageSend(null, null, false);
-    private CitiesDB citiesDB = new CitiesDB("CitiesOfRussiaExtended.txt");
+
     private String userId = null;
     private String isChat = null;
 

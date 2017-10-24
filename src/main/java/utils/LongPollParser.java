@@ -37,11 +37,7 @@ public class LongPollParser {
             sizeOfJsonArray = inputJson.getAsJsonArray().size();
 
             JsonArray jsonField;
-/*
-//debug
-            System.out.println("The whole \"updates\" array:");
-            System.out.println(inputJson.getAsJsonArray().toString());
-*/
+
             //iterate through all of the elements of the "updates" section
             //...which is array and contains arrays
             for (int i = 0; i < sizeOfJsonArray; i++) {
