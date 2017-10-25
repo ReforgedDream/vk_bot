@@ -24,7 +24,7 @@ public abstract class AbstractApiMethod {
         this.params.put(key, value);
     }
 
-    public void vipeParam() {
+    public void wipeParam() {
         this.params.clear();
     }
 

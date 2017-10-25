@@ -24,6 +24,9 @@ public class MessageGetLongPollServer extends AbstractApiMethod {
      */
     public String[] getLongPollServer() {
 
+        //Clear the list of parameters for order's sake
+        wipeParam();
+
         //for this API method only one parameter is required
         //a long poll version number
         setParam(LP_VERSION, this.lpVersion);

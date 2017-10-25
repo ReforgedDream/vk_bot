@@ -3,6 +3,8 @@ package utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
+import java.util.HashMap;
+
 public class LongPollParser {
 
     /**
@@ -17,17 +19,21 @@ public class LongPollParser {
      *
      * @param inputJson
      */
-    public String[] parseLongPollAnswer(JsonElement inputJson) {
+    public HashMap<String, String> parseLongPollAnswer(JsonElement inputJson) {
+
+        //this string goes in "id" entry of the HashMap...
+        //...when nothing has been parsed during this Long Poll "session"
+        final String ID_ERROR_FLAG = "-1";
+        //this string goes in "isChat" entry of the HashMap...
+        //...when the input object is not a JSON Array...
+        //...(in other words, when the protocol has been broken)
+        final String IS_CHAT_ERROR_FLAG = "-1";
+
+        HashMap<String, String> result = new HashMap<String, String>();
+        result.clear();
 
         int sizeOfJsonArray = 0;
         int id = 0;
-        String[] answer = new String[5];
-
-        answer[0] = null;
-        answer[1] = null;
-        answer[2] = null;
-        answer[3] = null;
-        answer[4] = null;
 
         boolean isChat = false;
 
@@ -76,12 +82,14 @@ public class LongPollParser {
                                     }
 
                                     //return as strings: ID, isChat flag, flags from API, message and message ID
-                                    answer[0] = Integer.toString(id);
-                                    answer[1] = Boolean.toString(isChat);
-                                    answer[2] = jsonField.get(2).getAsString();
-                                    answer[3] = jsonField.get(5).getAsString().toLowerCase();
-                                    answer[4] = jsonField.get(1).getAsString();
-                                    return answer;
+
+                                    result.put("id", Integer.toString(id));
+                                    result.put("isChat", Boolean.toString(isChat));
+                                    result.put("flags", jsonField.get(2).getAsString());
+                                    result.put("message", jsonField.get(5).getAsString().toLowerCase());
+                                    result.put("messageId", jsonField.get(1).getAsString());
+
+                                    return result;
                                 }
 
                             }
@@ -91,13 +99,13 @@ public class LongPollParser {
             }
 
             //nothing has been parsed during this Long Poll "session"
-            answer[0] = "-1";
-            return answer;
+            result.put("id", ID_ERROR_FLAG);
+            return result;
         } else {
 
             //The input object is not a JSON Array
-            answer[1] = "-1";
-            return answer;
+            result.put("isChat", IS_CHAT_ERROR_FLAG);
+            return result;
         }
 
     }
