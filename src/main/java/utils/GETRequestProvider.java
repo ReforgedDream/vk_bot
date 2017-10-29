@@ -45,7 +45,8 @@ public class GETRequestProvider {
         }
 
         int responseCode = con.getResponseCode();
-        System.out.println("\n[Util GETRequestProvider]Sending 'GET' request to URL : " + url);
+
+        FileWriter.getInstance().writeToFile("[Util GETRequestProvider]Sending 'GET' request to URL : " + url);
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
