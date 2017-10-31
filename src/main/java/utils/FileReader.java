@@ -23,7 +23,6 @@ public class FileReader {
 
             encoded = Files.readAllBytes(Paths.get(this.path));
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }

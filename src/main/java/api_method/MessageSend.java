@@ -1,19 +1,28 @@
 package api_method;
 
+import com.google.gson.JsonElement;
+
 public class MessageSend extends AbstractApiMethod {
 
     private final String METHOD_NAME = "messages.send";
-
-    private final String CHAT_ID = "chat_id";
-
     private final String MESSAGE = "message";
 
-    private String chatId;
+    private boolean isChat = false;
+    private String idParameter = null;
+    private String id;
     private String message;
 
-    public void setChatId(String chatId) {
+    /**
+     * это конструктор
+     *
+     * @param id  айди чата
+     * @param message сообщение для отправки
+     */
+    public MessageSend(String id, String message, boolean isChat) {
+        this.id = id;
+        this.message = message;
+        this.isChat = isChat;
 
-        this.chatId = chatId;
     }
 
     public void setMessage(String message) {
@@ -21,21 +30,28 @@ public class MessageSend extends AbstractApiMethod {
         this.message = message;
     }
 
-    /**
-     * это конструктор
-     *
-     * @param chatId  айди чата
-     * @param message сообщение для отправки
-     */
-    public MessageSend(String chatId, String message) {
-        this.chatId = chatId;
-        this.message = message;
+    public void setId(String id) {
+
+        this.id = id;
+    }
+
+    public void setIsChat(boolean isChat) {
+
+        this.isChat = isChat;
     }
 
     public void Send() {
 
-        setParam(CHAT_ID, this.chatId);
-        setParam(MESSAGE, this.message);
+        wipeParam();
+
+        if (isChat) {
+            idParameter = "chat_id";
+        } else {
+            idParameter = "user_id";
+        }
+
+        setParam(idParameter, this.id);
+        setParam(MESSAGE, "[Бот]" + this.message);
 
         StringBuilder sb2 = new StringBuilder();
 
@@ -44,7 +60,7 @@ public class MessageSend extends AbstractApiMethod {
         sb2.append("?");
         sb2.append(getParamsToString());
 
-        super.Send(sb2.toString());
+        JsonElement jsonElementObject = super.Send(sb2.toString());
 
     }
 
