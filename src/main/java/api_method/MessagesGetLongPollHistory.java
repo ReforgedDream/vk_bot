@@ -16,7 +16,7 @@ public class MessagesGetLongPollHistory extends AbstractApiMethod {
 
         String[] strLpServerArray = getLongPollServer.getLongPollServer();
 
-        vipeParam();
+        wipeParam();
 
         setParam(TS, strLpServerArray[2]);
         setParam(LP_VERSION, lp_version);

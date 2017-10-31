@@ -23,6 +23,8 @@ public class MessageGetHistory extends AbstractApiMethod {
 
     public String getHistory() {
 
+        wipeParam();
+
         setParam(CHAT_ID, this.chatId);
         setParam(OFFSET, this.offset);
         setParam(COUNT, this.count);

@@ -42,7 +42,7 @@ public class MessageSend extends AbstractApiMethod {
 
     public void Send() {
 
-        vipeParam();
+        wipeParam();
 
         if (isChat) {
             idParameter = "chat_id";
