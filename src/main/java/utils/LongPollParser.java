@@ -91,7 +91,6 @@ public class LongPollParser {
 
                                     return result;
                                 }
-
                             }
                         }
                     }
@@ -107,8 +106,5 @@ public class LongPollParser {
             result.put("isChat", IS_CHAT_ERROR_FLAG);
             return result;
         }
-
     }
-
-
 }

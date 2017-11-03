@@ -17,9 +17,7 @@ public class MainClass {
 
         HashMap<String, String> messageData;
 
-        boolean isInGame = false;
-
-        while (!isInGame) {
+        while (true) {
 
             messageData = lpParser.parseLongPollAnswer(lp.sendRequestToLongPoll());
 
@@ -31,8 +29,6 @@ public class MainClass {
                     Cities cities = new Cities(messageData.get("id"), messageData.get("isChat"));
 
                     cities.startGameCities();
-
-                    isInGame = true;
                 }
             }
         }
