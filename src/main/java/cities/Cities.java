@@ -136,10 +136,10 @@ public class Cities {
             if (entry.charAt(0) == citiesChecks.getLastChar() && !citiesChecks.checkUsedCity(entry)) {
                 citiesDB.getUsedCities().add(entry); //Добавить последний ход в базу использованных городов
                 citiesChecks.setLastStep(entry); //Запомнить последний ход
-                messageSend.setMessage("Успешно! Ход противника: " + entry + ". " +
-                        PLEASE_ENTER_LETTER + citiesChecks.getLastChar() + ":");
+                messageSend.setMessage("Успешно! Ход противника: " +
+                        Character.toUpperCase(entry.charAt(0)) + entry.substring(1) +
+                        ". " + PLEASE_ENTER_LETTER + Character.toUpperCase(citiesChecks.getLastChar()) + ":");
                 messageSend.Send();
-
                 break; //для продолжения игры
             } else if (i++ == citiesDB.getСitiesList().size() - 1) { //Последний ход
                 messageSend.setMessage("Бот не может назвать город! Вы победили!");
