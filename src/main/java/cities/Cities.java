@@ -134,11 +134,12 @@ public class Cities {
         int i = 0; //Счетчик для определения последнего цикла
         for (String entry : citiesDB.getСitiesList()) {
             if (entry.charAt(0) == citiesChecks.getLastChar() && !citiesChecks.checkUsedCity(entry)) {
-                messageSend.setMessage("Успешно! Ход противника: " + entry + ". " +
-                        PLEASE_ENTER_LETTER + entry.charAt(entry.length() - 1) + ":");
-                messageSend.Send();
                 citiesDB.getUsedCities().add(entry); //Добавить последний ход в базу использованных городов
                 citiesChecks.setLastStep(entry); //Запомнить последний ход
+                messageSend.setMessage("Успешно! Ход противника: " + entry + ". " +
+                        PLEASE_ENTER_LETTER + citiesChecks.getLastChar() + ":");
+                messageSend.Send();
+
                 break; //для продолжения игры
             } else if (i++ == citiesDB.getСitiesList().size() - 1) { //Последний ход
                 messageSend.setMessage("Бот не может назвать город! Вы победили!");
