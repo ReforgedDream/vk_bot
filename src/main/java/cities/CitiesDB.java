@@ -30,7 +30,7 @@ class CitiesDB {
     private void addCities(String fileName) {
         String filePath = new File("").getAbsolutePath(); //Получить путь к текущему каталогу
         try {
-            BufferedReader readFromFile = new BufferedReader(new FileReader(filePath.concat("/src/main/java/cities/" + fileName)));
+            BufferedReader readFromFile = new BufferedReader(new FileReader(filePath.concat("/" + fileName)));
             for (String lineCity = readFromFile.readLine(); lineCity != null; lineCity = readFromFile.readLine()) {
                 citiesList.add(lineCity.toLowerCase());
             }

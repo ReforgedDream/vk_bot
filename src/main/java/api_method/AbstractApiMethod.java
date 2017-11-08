@@ -12,7 +12,7 @@ public abstract class AbstractApiMethod {
 
     private final String TOKEN_STRING = "access_token";
 
-    private final String TOKEN_API = new FileReader("src/main/java/token").ReadFile();
+    private final String TOKEN_API = new FileReader(System.getProperty("user.dir") +  "/token").ReadFile().trim();
 
     private final String VERSION = "v";
 
@@ -83,7 +83,7 @@ public abstract class AbstractApiMethod {
         try {
             returnJson = new GETRequestProvider(url.replace(" ", "%20"), 0).sendGet();
         } catch (Exception e) {
-            e.printStackTrace();
+	    System.err.println(url + e.toString());
         }
 
         return returnJson;
