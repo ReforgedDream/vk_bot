@@ -134,6 +134,7 @@ public class Cities {
         int i = 0; //Счетчик для определения последнего цикла
         for (String entry : citiesDB.getСitiesList()) {
             if (entry.charAt(0) == citiesChecks.getLastChar() && !citiesChecks.checkUsedCity(entry)) {
+                messageSend.Send();
                 citiesDB.getUsedCities().add(entry); //Добавить последний ход в базу использованных городов
                 citiesChecks.setLastStep(entry); //Запомнить последний ход
                 messageSend.setMessage("Успешно! Ход противника: " + entry + ". " +
